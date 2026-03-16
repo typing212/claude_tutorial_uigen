@@ -1,4 +1,5 @@
 import { anthropic } from "@ai-sdk/anthropic";
+import { google } from "@ai-sdk/google";
 import {
   LanguageModelV1,
   LanguageModelV1StreamPart,
@@ -507,12 +508,19 @@ export default function App() {
 }
 
 export function getLanguageModel() {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+  const anthropicKey = process.env.ANTHROPIC_API_KEY;
 
-  if (!apiKey || apiKey.trim() === "") {
-    console.log("No ANTHROPIC_API_KEY found, using mock provider");
-    return new MockLanguageModel("mock-claude-sonnet-4-0");
+  if (googleKey && googleKey.trim() !== "") {
+    console.log("Using Google Gemini provider");
+    return google("gemini-2.0-flash");
   }
 
-  return anthropic(MODEL);
+  if (anthropicKey && anthropicKey.trim() !== "") {
+    console.log("Using Anthropic provider");
+    return anthropic(MODEL);
+  }
+
+  console.log("No API key found, using mock provider");
+  return new MockLanguageModel("mock-claude-sonnet-4-0");
 }

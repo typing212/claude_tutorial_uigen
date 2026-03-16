@@ -19,9 +19,6 @@ export async function POST(req: Request) {
   messages.unshift({
     role: "system",
     content: generationPrompt,
-    providerOptions: {
-      anthropic: { cacheControl: { type: "ephemeral" } },
-    },
   });
 
   // Reconstruct the VirtualFileSystem from serialized data
@@ -30,7 +27,7 @@ export async function POST(req: Request) {
 
   const model = getLanguageModel();
   // Use fewer steps for mock provider to prevent repetition
-  const isMockProvider = !process.env.ANTHROPIC_API_KEY;
+  const isMockProvider = !process.env.ANTHROPIC_API_KEY && !process.env.GOOGLE_GENERATIVE_AI_API_KEY;
   const result = streamText({
     model,
     messages,

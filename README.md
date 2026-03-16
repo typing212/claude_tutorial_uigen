@@ -56,6 +56,14 @@ Open [http://localhost:3000](http://localhost:3000)
 - Component persistence for registered users
 - Export generated code
 
+## Getting Help
+
+You can mention `@claude` in any GitHub issue to ask Claude for help. For example:
+
+> @claude can you investigate this bug and suggest a fix?
+
+Claude will analyze the issue and post a response with findings or code changes.
+
 ## Tech Stack
 
 - Next.js 15 with App Router
